@@ -50,7 +50,7 @@ CallbackReturn LaserSegmentation::on_configure(const rclcpp_lifecycle::State &)
   auto default_qos = rclcpp::QoS(rclcpp::SystemDefaultsQoS());
   scan_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
     params_->scan_topic,
-    default_qos,
+    rclcpp::QoS(10).best_effort(),
     std::bind(&LaserSegmentation::scan_callback, this, std::placeholders::_1));
 
   RCLCPP_INFO(this->get_logger(), "Configured laser segmentation node");
