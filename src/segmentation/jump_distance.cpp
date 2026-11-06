@@ -32,6 +32,9 @@ void JumpDistanceSegmentation::perform_segmentation(
   const std::vector<slg::Point2D> points,
   std::vector<slg::Segment2D> & segments)
 {
+
+  segments.clear();
+
   int count = -1;
 
   // Create the points and segment
@@ -63,6 +66,7 @@ void JumpDistanceSegmentation::perform_segmentation(
     } else {
       // Add the actual segment to the list
       if (!current_segment.empty()) {
+        current_segment.set_next_segment(current_point);
         segments.push_back(current_segment);
       }
       // And create a new segment
@@ -73,7 +77,9 @@ void JumpDistanceSegmentation::perform_segmentation(
   }
 
   // Add the last segment to the list
+  if (!current_segment.empty()) {
   segments.push_back(current_segment);
+  }
 
   // Check if last and first segments belongs to the same segment
   if (segments.size() > 1) {

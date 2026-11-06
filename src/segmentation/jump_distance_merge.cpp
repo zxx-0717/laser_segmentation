@@ -33,6 +33,7 @@ void JumpDistanceSegmentationMerge::perform_segmentation(
   const std::vector<slg::Point2D> points,
   std::vector<slg::Segment2D> & segments)
 {
+  segments.clear();
   int count = -1;
 
   // Create the points and segment
@@ -64,6 +65,7 @@ void JumpDistanceSegmentationMerge::perform_segmentation(
     } else {
       // Add the actual segment to the list
       if (!current_segment.empty()) {
+        current_segment.set_next_segment(current_point);
         segments.push_back(current_segment);
       }
       // And create a new segment
